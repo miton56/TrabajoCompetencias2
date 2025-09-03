@@ -4,6 +4,8 @@
 
 package com.mycompany.poryecto_competencias2;
 
+import com.mycompany.poryecto_competencias2.vistas.login;
+
 /**
  *
  * @author Willow
@@ -11,6 +13,9 @@ package com.mycompany.poryecto_competencias2;
 public class Poryecto_competencias2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        login l = new login();
+       
     }
+   
 }
