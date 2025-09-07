@@ -10,9 +10,8 @@
         <maven.compiler.release>17</maven.compiler.release>
         <exec.mainClass>com.mycompany.poryecto_competencias2.Poryecto_competencias2</exec.mainClass>
     </properties>
-    <name>proyecto_competencias2</name>
+    <name>poryecto_competencias2</name>
     <dependencies>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
