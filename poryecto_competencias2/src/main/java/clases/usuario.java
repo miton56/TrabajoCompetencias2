@@ -11,7 +11,7 @@ public class usuario {
 
      private String cargo;
 
-
+     public usuario(){}   
 
      public usuario(int id, String Nombre, String Contrasena, String Cargo, String Apellidos){
 
