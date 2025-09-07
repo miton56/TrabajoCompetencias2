@@ -12,11 +12,11 @@
     </properties>
     <name>proyecto_competencias2</name>
     <dependencies>
-        
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>9.4.0</version> <!-- o la versión más reciente -->
-    </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
     </dependencies>
 </project>
