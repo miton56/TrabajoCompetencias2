@@ -3,6 +3,8 @@ package com.mycompany.poryecto_competencias2.modelos;
 
 
 public class usuarios {
+
+    int ID;
     
     String Nombre;
 
@@ -14,19 +16,26 @@ public class usuarios {
 
     String Direccion;
 
+    String correo;
+
+    String contrasenia;
+
     public usuarios() {
     }
 
-    public usuarios(String Nombre, String Apellidos, String Telefono, String Rut, String Direccion) {
+    public usuarios(String Nombre, String Apellidos, String Telefono, String Rut, String Direccion, String Correo, String Contrasenia) {
         this.Nombre = Nombre;
         this.Apellidos = Apellidos;
         this.Telefono = Telefono;
         this.Rut = Rut;
         this.Direccion = Direccion;
+        this.correo = Correo;
+        this.contrasenia = Contrasenia;
+        
     }
 
     public String getNombre() {
-        return Nombre;
+        return this.Nombre;
     }
 
     public void setNombre(String Nombre) {
@@ -34,7 +43,7 @@ public class usuarios {
     }
 
     public String getApellidos() {
-        return Apellidos;
+        return this.Apellidos;
     }
 
     public void setApellidos(String Apellidos) {
@@ -42,7 +51,7 @@ public class usuarios {
     }
 
     public String getTelefono() {
-        return Telefono;
+        return this.Telefono;
     }
 
     public void setTelefono(String Telefono) {
@@ -50,7 +59,7 @@ public class usuarios {
     }
 
     public String getRut() {
-        return Rut;
+        return this.Rut;
     }
 
     public void setRut(String Rut) {
@@ -58,11 +67,35 @@ public class usuarios {
     }
 
     public String getDireccion() {
-        return Direccion;
+        return this.Direccion;
     }
 
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
+    }
+    
+    public void setID(int id){
+        this.ID = id;
+    }
+
+    public int getID(){
+        return this.ID;
+    }
+
+      public String getCorreo() {
+        return this.correo;
+    }
+
+    public void setCorreo(String Correo) {
+        this.correo = Correo;
+    }
+
+      public String getContrasenia() {
+        return this.contrasenia;
+    }
+
+    public void setContrasenia(String Contrasenia) {
+        this.contrasenia = Contrasenia;
     }
 
    
