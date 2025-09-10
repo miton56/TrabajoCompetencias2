@@ -1,4 +1,4 @@
-package clases;
+package com.mycompany.poryecto_competencias2.modelos;
 
 public class Login {
     private int idLogin;

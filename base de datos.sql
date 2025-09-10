@@ -69,7 +69,7 @@ BEGIN
     FROM Empleados e
     JOIN Asistencia a ON e.ID = a.ID_Empleado
     WHERE a.Fecha = fechaX
-      AND a.Hora_Entrada > horaLimite;
+      AND a.Hora_Salida < horaLimite;
 END$$
 
 DELIMITER ;

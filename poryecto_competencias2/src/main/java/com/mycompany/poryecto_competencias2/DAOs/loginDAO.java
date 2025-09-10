@@ -1,11 +1,11 @@
-package com.mycompany.poryecto_competencias2.modelos;
+package com.mycompany.poryecto_competencias2.DAOs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class loginModelo {
+public class loginDAO {
 
     String url = "jdbc:mysql://100.113.173.92:3306/empleados";
     String user = "ventas";
@@ -13,7 +13,7 @@ public class loginModelo {
 
     Connection con;
 
-    public loginModelo() {
+    public loginDAO() {
         try {
             this.con = DriverManager.getConnection(url, user, pass);
             System.out.println("Conectado a la BD en loginModelo");
