@@ -2,6 +2,9 @@ package com.mycompany.poryecto_competencias2.DAOs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.mycompany.poryecto_competencias2.modelos.usuarios;
 
@@ -66,10 +69,21 @@ public class usuariosDAO {
 
     }
 
-    public void seleccionarUsuarios(){
+    public void seleccionarUsuarios(Map<String, String> condiciones){
+
         String sql = "select * from Empleados";
 
-        List usuarios 
+        List<String> anidados = new ArrayList<>();
+        
+
+        if (condiciones != null){
+
+            for(Map.Entry<String, String> condi : condiciones.entrySet()){
+
+                anidados.add(condi.getKey() + " = " + condi.getValue());
+
+            }
+        }
 
          try{
 
