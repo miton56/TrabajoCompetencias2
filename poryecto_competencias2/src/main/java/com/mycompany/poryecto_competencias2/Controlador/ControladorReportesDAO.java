@@ -25,6 +25,12 @@ public class ControladorReportesDAO {
             ResultSet rs = cs.executeQuery();
 
             while (rs.next()) {
+
+                ResultSetMetaData metaData = rs.getMetaData();
+for (int i = 1; i <= metaData.getColumnCount(); i++) {
+    System.out.println("Columna: " + metaData.getColumnName(i));
+}
+
                 ReporteAtrasoModelo reporte = new ReporteAtrasoModelo();
                 reporte.setNombre(rs.getString("Nombre"));
                 reporte.setApellidos(rs.getString("Apellidos"));
@@ -32,6 +38,8 @@ public class ControladorReportesDAO {
                 reporte.setHoraEntrada(rs.getTime("Hora_Entrada"));
                 lista.add(reporte);
             }
+
+            System.err.println(lista.get(0).getNombre());
 
         } catch (Exception e) {
             System.out.println("Error al obtener atrasados: " + e.getMessage());
@@ -58,6 +66,8 @@ public class ControladorReportesDAO {
                 lista.add(reporte);
             }
 
+            System.err.println(lista);
+
         } catch (Exception e) {
             System.out.println("Error al obtener salidas anticipadas: " + e.getMessage());
         }
@@ -80,6 +90,8 @@ public class ControladorReportesDAO {
                 reporte.setFecha(rs.getDate("Fecha"));
                 lista.add(reporte);
             }
+
+            System.err.println(lista);
 
         } catch (Exception e) {
             System.out.println("Error al obtener inasistencias: " + e.getMessage());

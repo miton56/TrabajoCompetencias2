@@ -11,6 +11,8 @@ import java.sql.*;
 import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
 import com.mycompany.poryecto_competencias2.DAOs.usuariosDAO;
 import com.mycompany.poryecto_competencias2.modelos.usuarios;
+import com.mycompany.poryecto_competencias2.vistas.VistaMenuAdmin;
+import com.mycompany.poryecto_competencias2.vistas.VistaMenuEmpleado;
 
 /**
  *
@@ -20,17 +22,9 @@ public class Poryecto_competencias2 {
 
     public static void main(String[] args) {
 
-     ControladorReportesDAO Dao = new ControladorReportesDAO();
+    VistaMenuAdmin view = new VistaMenuAdmin();
 
-     LocalTime horaNew = LocalTime.now();
-
-     LocalDate fechaNew = LocalDate.now();
-
-
-     Dao.obtenerAtrasados(Date.valueOf(fechaNew), Time.valueOf(horaNew));
-
-
-
+    view.setVisible(true);
 
 
     }
