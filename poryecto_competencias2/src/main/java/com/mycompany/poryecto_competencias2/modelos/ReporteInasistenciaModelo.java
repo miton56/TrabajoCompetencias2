@@ -1,4 +1,4 @@
-package modelos;
+package com.mycompany.poryecto_competencias2.modelos;
 
 import java.sql.Date;
 

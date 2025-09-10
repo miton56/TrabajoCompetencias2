@@ -1,11 +1,12 @@
-package Controlador;
+package com.mycompany.poryecto_competencias2.Controlador;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import modelos.ReporteAtrasoModelo;
-import modelos.ReporteSalidaModelo;
-import modelos.ReporteInasistenciaModelo;
+
+import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
 
 public class ControladorReportesDAO {
 

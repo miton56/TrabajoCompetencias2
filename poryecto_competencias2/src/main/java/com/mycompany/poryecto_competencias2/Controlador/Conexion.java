@@ -1,4 +1,4 @@
-package Controlador;
+package com.mycompany.poryecto_competencias2.Controlador;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
