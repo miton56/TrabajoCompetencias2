@@ -73,3 +73,19 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- Empleados inasistencia
+DELIMITER $$
+
+CREATE PROCEDURE EmpleadosInasistencias (
+    IN fechaX DATE
+)
+BEGIN
+    SELECT e.Nombre, e.Apellidos
+    FROM Empleados e
+    LEFT JOIN Asistencia a 
+        ON e.ID = a.ID_Empleado AND a.Fecha = fechaX
+    WHERE a.ID_Empleado IS NULL;
+END$$
+
+DELIMITER ;

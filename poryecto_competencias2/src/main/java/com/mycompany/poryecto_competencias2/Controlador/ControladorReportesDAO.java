@@ -1,101 +1,73 @@
 package com.mycompany.poryecto_competencias2.Controlador;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.mycompany.poryecto_competencias2.DAOs.ReporteDAO;
 import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
-import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
 import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
+
+
+import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
 
 public class ControladorReportesDAO {
 
-    private Connection getConnection() {
-        return new Conexion().getConexion();
+    private ReporteDAO reporteDAO = new ReporteDAO();
+
+    // Mostrar atrasados
+    public void mostrarAtrasados(javax.swing.JTable tabla, Date fecha, Time horaLimite) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Nombre", "Apellidos", "Fecha", "Hora Entrada"});
+
+        List<ReporteAtrasoModelo> atrasados = reporteDAO.obtenerAtrasados(fecha, horaLimite);
+
+        for (ReporteAtrasoModelo r : atrasados) {
+            modelo.addRow(new Object[]{
+                    r.getNombre(),
+                    r.getApellidos(),
+                    r.getFecha(),
+                    r.getHoraEntrada()
+            });
+        }
+
+        tabla.setModel(modelo);
     }
 
-    // Obtener empleados atrasados
-    public List<ReporteAtrasoModelo> obtenerAtrasados(Date fecha, Time horaLimite) {
-        List<ReporteAtrasoModelo> lista = new ArrayList<>();
-        try (Connection con = getConnection();
-             CallableStatement cs = con.prepareCall("{CALL EmpleadosTarde(?, ?)}")) {
+    // Mostrar salidas antes
+    public void mostrarSalidas(javax.swing.JTable tabla, Date fecha, Time horaLimite) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Nombre", "Apellidos", "Fecha", "Hora Salida"});
 
-            cs.setDate(1, fecha);
-            cs.setTime(2, horaLimite);
-            ResultSet rs = cs.executeQuery();
+        List<ReporteSalidaModelo> salidas = reporteDAO.obtenerSalidasAnticipadas(fecha, horaLimite);
 
-            while (rs.next()) {
-
-                ResultSetMetaData metaData = rs.getMetaData();
-for (int i = 1; i <= metaData.getColumnCount(); i++) {
-    System.out.println("Columna: " + metaData.getColumnName(i));
-}
-
-                ReporteAtrasoModelo reporte = new ReporteAtrasoModelo();
-                reporte.setNombre(rs.getString("Nombre"));
-                reporte.setApellidos(rs.getString("Apellidos"));
-                reporte.setFecha(rs.getDate("Fecha"));
-                reporte.setHoraEntrada(rs.getTime("Hora_Entrada"));
-                lista.add(reporte);
-            }
-
-            System.err.println(lista.get(0).getNombre());
-
-        } catch (Exception e) {
-            System.out.println("Error al obtener atrasados: " + e.getMessage());
+        for (ReporteSalidaModelo r : salidas) {
+            modelo.addRow(new Object[]{
+                    r.getNombre(),
+                    r.getApellidos(),
+                    r.getFecha(),
+                    r.getHoraSalida()
+            });
         }
-        return lista;
+
+        tabla.setModel(modelo);
     }
 
-    // Obtener empleados con salida anticipada
-    public List<ReporteSalidaModelo> obtenerSalidasAnticipadas(Date fecha, Time horaLimite) {
-        List<ReporteSalidaModelo> lista = new ArrayList<>();
-        try (Connection con = getConnection();
-             CallableStatement cs = con.prepareCall("{CALL EmpleadosSalidaAntes(?, ?)}")) {
+    // Mostrar inasistencias
+    public void mostrarInasistencias(javax.swing.JTable tabla, Date fecha) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Nombre", "Apellidos", "Fecha"});
 
-            cs.setDate(1, fecha);
-            cs.setTime(2, horaLimite);
-            ResultSet rs = cs.executeQuery();
+        List<ReporteInasistenciaModelo> inasistencias = reporteDAO.obtenerInasistencias(fecha);
 
-            while (rs.next()) {
-                ReporteSalidaModelo reporte = new ReporteSalidaModelo();
-                reporte.setNombre(rs.getString("Nombre"));
-                reporte.setApellidos(rs.getString("Apellidos"));
-                reporte.setFecha(rs.getDate("Fecha"));
-                reporte.setHoraSalida(rs.getTime("Hora_Salida"));
-                lista.add(reporte);
-            }
-
-            System.err.println(lista);
-
-        } catch (Exception e) {
-            System.out.println("Error al obtener salidas anticipadas: " + e.getMessage());
+        for (ReporteInasistenciaModelo r : inasistencias) {
+            modelo.addRow(new Object[]{
+                    r.getNombre(),
+                    r.getApellidos(),
+                    r.getFecha()
+            });
         }
-        return lista;
-    }
 
-    // Obtener empleados inasistentes
-    public List<ReporteInasistenciaModelo> obtenerInasistencias(Date fecha) {
-        List<ReporteInasistenciaModelo> lista = new ArrayList<>();
-        try (Connection con = getConnection();
-             CallableStatement cs = con.prepareCall("{CALL EmpleadosInasistentes(?)}")) {
-
-            cs.setDate(1, fecha);
-            ResultSet rs = cs.executeQuery();
-
-            while (rs.next()) {
-                ReporteInasistenciaModelo reporte = new ReporteInasistenciaModelo();
-                reporte.setNombre(rs.getString("Nombre"));
-                reporte.setApellidos(rs.getString("Apellidos"));
-                reporte.setFecha(rs.getDate("Fecha"));
-                lista.add(reporte);
-            }
-
-            System.err.println(lista);
-
-        } catch (Exception e) {
-            System.out.println("Error al obtener inasistencias: " + e.getMessage());
-        }
-        return lista;
+        tabla.setModel(modelo);
     }
 }
