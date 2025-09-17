@@ -3,25 +3,21 @@ package com.mycompany.poryecto_competencias2.DAOs;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
 import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
 import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
 import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
 
 public class ReporteDAO {
 
-    String url = "jdbc:mysql://100.113.173.92:3306/empleados";
-    String user = "ventas";
-    String pass = "ventasMartin";
+    Conexion conect = new Conexion();
 
     Connection con;
 
     public ReporteDAO() {
-        try {
-            this.con = DriverManager.getConnection(this.url, this.user, this.pass);
-            System.out.println("Conexión correcta en ReporteDAO");
-        } catch (Exception e) {
-            System.err.println("Error al conectar en ReporteDAO: " + e);
-        }
+      
+        this.con = this.conect.getConexion();
     }
 
     public List<ReporteAtrasoModelo> obtenerAtrasados(Date fecha, Time horaLimite) {
@@ -69,7 +65,7 @@ public class ReporteDAO {
     public List<ReporteInasistenciaModelo> obtenerInasistencias(Date fecha) {
         List<ReporteInasistenciaModelo> lista = new ArrayList<>();
         try {
-            CallableStatement cs = this.con.prepareCall("{CALL EmpleadosInasistentes(?)}");
+            CallableStatement cs = this.con.prepareCall("{CALL EmpleadosInasistencias(?)}");
             cs.setDate(1, fecha);
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {

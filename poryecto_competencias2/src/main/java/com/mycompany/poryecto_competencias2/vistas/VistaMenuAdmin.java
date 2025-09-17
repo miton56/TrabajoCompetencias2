@@ -354,6 +354,8 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             tfDireccion.setText("");
             tfContrasena.setText("");
             tfCorreoElectronico.setText("");
+
+            tablaEmpleados.setModel(modelo);
             
         }
     }//GEN-LAST:event_btnAnadirActionPerformed

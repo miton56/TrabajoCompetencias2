@@ -5,21 +5,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
+
 public class loginDAO {
 
-    String url = "jdbc:mysql://100.113.173.92:3306/empleados";
-    String user = "ventas";
-    String pass = "ventasMartin";
+    Conexion conect = new Conexion();
 
     Connection con;
 
     public loginDAO() {
-        try {
-            this.con = DriverManager.getConnection(url, user, pass);
-            System.out.println("Conectado a la BD en loginModelo");
-        } catch (Exception e) {
-            System.out.println("Error al conectar: " + e);
-        }
+  
+        this.con = this.conect.getConexion();
     }
 
     // Insertar un nuevo login

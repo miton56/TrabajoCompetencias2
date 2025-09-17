@@ -7,29 +7,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
 import com.mycompany.poryecto_competencias2.modelos.usuarios;
 
 public class usuariosDAO {
     
-    String url = "jdbc:mysql://100.113.173.92:3306/empleados";
+    Conexion conect = new Conexion();
 
-    String user = "ventas";
-
-    String pass = "ventasMartin";
 
     Connection con;
 
     public usuariosDAO(){
 
-        try{
+       this.con = this.conect.getConexion();
 
-            this.con = DriverManager.getConnection(this.url, this.user, this.pass);
-
-            System.out.print("conexion correcta");
-
-        }catch(Exception e){
-            System.err.println("ha ocurrido un error: " + e);
-        }
 
     }
 
