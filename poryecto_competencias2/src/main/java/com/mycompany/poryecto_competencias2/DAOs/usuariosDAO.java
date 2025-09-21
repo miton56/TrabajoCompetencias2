@@ -2,6 +2,8 @@ package com.mycompany.poryecto_competencias2.DAOs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +26,7 @@ public class usuariosDAO {
 
     }
 
-    public void ingresarUsuario(usuarios Usuario){
+    public Integer ingresarUsuario(usuarios Usuario){
 
         String sql = "INSERT into Empleados (Nombre, Apellidos, Telefono, Rut, Direccion) Values (?,?,?,?,?)";
 
@@ -32,7 +34,9 @@ public class usuariosDAO {
 
         try{
 
-            PreparedStatement ps = this.con.prepareStatement(sql);
+            PreparedStatement ps = this.con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            int IDgenerado = 1;
 
             ps.setString(1, Usuario.getNombre());
 
@@ -47,15 +51,21 @@ public class usuariosDAO {
             ps.executeUpdate();
 
             
-
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    IDgenerado = rs.getInt(1); // la primera columna contiene el ID generado
+                }
+            }
             System.out.println("Insercion Realizada");
 
-
+            return IDgenerado;
             
 
         }catch(Exception e){
 
             System.out.print("hubo un error: " + e);
+
+            return null;
 
         }
 

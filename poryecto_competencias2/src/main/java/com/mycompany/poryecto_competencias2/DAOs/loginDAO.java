@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.mycompany.poryecto_competencias2.Controlador.Conexion;
+import com.mycompany.poryecto_competencias2.modelos.Login;
 
 public class loginDAO {
 
@@ -19,14 +20,14 @@ public class loginDAO {
     }
 
     // Insertar un nuevo login
-    public void insertarLogin(int idEmpleado, String correo, String contrasena) {
+    public void insertarLogin(Login l) {
         try {
             String consulta = "INSERT INTO Login (ID_Empleado, CorreoUsuario, Contraseña) VALUES (?, ?, ?)";
 
             PreparedStatement statement = con.prepareStatement(consulta);
-            statement.setInt(1, idEmpleado);
-            statement.setString(2, correo);
-            statement.setString(3, contrasena);
+            statement.setInt(1, l.getIdEmpleado());
+            statement.setString(2, l.getCorreo());
+            statement.setString(3, l.getContrasena());
 
             int filas = statement.executeUpdate();
 
@@ -40,13 +41,13 @@ public class loginDAO {
     }
 
     // Validar login (para login.java)
-    public boolean validarLogin(String correo, String contrasena) {
+    public boolean validarLogin(Login l) {
         try {
             String consulta = "SELECT * FROM Login WHERE CorreoUsuario = ? AND Contraseña = ?";
 
             PreparedStatement statement = con.prepareStatement(consulta);
-            statement.setString(1, correo);
-            statement.setString(2, contrasena);
+            statement.setString(1, l.getCorreo());
+            statement.setString(2, l.getContrasena());
 
             ResultSet rs = statement.executeQuery();
 
