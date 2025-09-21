@@ -336,7 +336,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         String correo = tfCorreoElectronico.getText();
         String contra = tfContrasena.getText();
  
-        //Arreglar esta wea  
+       
         
         if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty()||
                 rut.isEmpty()|| direccion.isEmpty()|| correo.isEmpty() || contra.isEmpty()){
