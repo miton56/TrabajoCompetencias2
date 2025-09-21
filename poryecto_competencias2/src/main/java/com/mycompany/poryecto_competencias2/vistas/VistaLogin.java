@@ -4,6 +4,9 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author marti
@@ -29,14 +32,14 @@ public class VistaLogin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         label1Bienvenido = new java.awt.Label();
         IniciarSesionButton = new java.awt.Button();
-        CorreoUsuarioText = new java.awt.TextField();
-        ContrasenaTextField = new java.awt.TextField();
+        tfCorreoUsuario = new java.awt.TextField();
+        tfContrasena = new java.awt.TextField();
         label1 = new java.awt.Label();
         label2 = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        label1Bienvenido.setFont(new java.awt.Font("Courier New", 0, 36)); // NOI18N
+        label1Bienvenido.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         label1Bienvenido.setText("Bienvenido");
 
         IniciarSesionButton.setLabel("Iniciar Sesión");
@@ -46,16 +49,20 @@ public class VistaLogin extends javax.swing.JFrame {
             }
         });
 
-        CorreoUsuarioText.setName(""); // NOI18N
-        CorreoUsuarioText.addActionListener(new java.awt.event.ActionListener() {
+        tfCorreoUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        tfCorreoUsuario.setName(""); // NOI18N
+        tfCorreoUsuario.setText("Ingresa tu corrreo (Ej: correo@ejemplo.com )");
+        tfCorreoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CorreoUsuarioTextActionPerformed(evt);
+                tfCorreoUsuarioActionPerformed(evt);
             }
         });
 
-        ContrasenaTextField.addActionListener(new java.awt.event.ActionListener() {
+        tfContrasena.setForeground(new java.awt.Color(204, 204, 204));
+        tfContrasena.setText("Ingresa tu contraseña (Ej: contrasena123)");
+        tfContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContrasenaTextFieldActionPerformed(evt);
+                tfContrasenaActionPerformed(evt);
             }
         });
 
@@ -68,36 +75,36 @@ public class VistaLogin extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label1Bienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(73, 73, 73)
-                            .addComponent(IniciarSesionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(75, 75, 75))
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(CorreoUsuarioText, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(ContrasenaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(278, 278, 278)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(IniciarSesionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfCorreoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(315, 315, 315)
+                        .addComponent(label1Bienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(292, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label1Bienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(label1Bienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(CorreoUsuarioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCorreoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ContrasenaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addComponent(tfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IniciarSesionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         label1.getAccessibleContext().setAccessibleName("Usuario");
@@ -107,32 +114,38 @@ public class VistaLogin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(94, 94, 94)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(597, Short.MAX_VALUE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(28, 28, 28))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void IniciarSesionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarSesionButtonActionPerformed
-        // TODO add your handling code here:
+     if (tfCorreoUsuario.getText().trim().isEmpty() || tfContrasena.getText().trim().isEmpty()) {
+{
+            JOptionPane.showMessageDialog(this,"Ingrese todos los campos",
+                    "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
+        } else {//Modificar esta parte para que se agregue el modelo
+            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+            modelo.addRow(new Object[]{nombre, apellido, telefono, rut, direccion, correo, contra});        // TODO add your handling code here:
     }//GEN-LAST:event_IniciarSesionButtonActionPerformed
 
-    private void ContrasenaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContrasenaTextFieldActionPerformed
+    private void tfContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContrasenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ContrasenaTextFieldActionPerformed
+    }//GEN-LAST:event_tfContrasenaActionPerformed
 
-    private void CorreoUsuarioTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoUsuarioTextActionPerformed
+    private void tfCorreoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreoUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CorreoUsuarioTextActionPerformed
+    }//GEN-LAST:event_tfCorreoUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,12 +183,12 @@ public class VistaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.TextField ContrasenaTextField;
-    private java.awt.TextField CorreoUsuarioText;
     private java.awt.Button IniciarSesionButton;
     private javax.swing.JPanel jPanel2;
     private java.awt.Label label1;
     private java.awt.Label label1Bienvenido;
     private java.awt.Label label2;
+    private java.awt.TextField tfContrasena;
+    private java.awt.TextField tfCorreoUsuario;
     // End of variables declaration//GEN-END:variables
 }
