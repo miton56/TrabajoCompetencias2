@@ -2,37 +2,31 @@ package com.mycompany.poryecto_competencias2.DAOs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
 import com.mycompany.poryecto_competencias2.modelos.usuarios;
 
 public class usuariosDAO {
     
-    String url = "jdbc:mysql://100.113.173.92:3306/empleados";
+    Conexion conect = new Conexion();
 
-    String user = "ventas";
-
-    String pass = "ventasMartin";
 
     Connection con;
 
     public usuariosDAO(){
 
-        try{
+       this.con = this.conect.getConexion();
 
-            this.con = DriverManager.getConnection(this.url, this.user, this.pass);
-
-            System.out.print("conexion correcta");
-
-        }catch(Exception e){
-            System.err.println("ha ocurrido un error: " + e);
-        }
 
     }
 
-    public void ingresarUsuario(usuarios Usuario){
+    public Integer ingresarUsuario(usuarios Usuario){
 
         String sql = "INSERT into Empleados (Nombre, Apellidos, Telefono, Rut, Direccion) Values (?,?,?,?,?)";
 
@@ -40,7 +34,9 @@ public class usuariosDAO {
 
         try{
 
-            PreparedStatement ps = this.con.prepareStatement(sql);
+            PreparedStatement ps = this.con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            int IDgenerado = 1;
 
             ps.setString(1, Usuario.getNombre());
 
@@ -55,15 +51,21 @@ public class usuariosDAO {
             ps.executeUpdate();
 
             
-
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    IDgenerado = rs.getInt(1); // la primera columna contiene el ID generado
+                }
+            }
             System.out.println("Insercion Realizada");
 
-
+            return IDgenerado;
             
 
         }catch(Exception e){
 
             System.out.print("hubo un error: " + e);
+
+            return null;
 
         }
 
@@ -76,7 +78,7 @@ public class usuariosDAO {
         List<String> anidados = new ArrayList<>();
         
 
-        if (condiciones != null){
+        if (condiciones != null && !condiciones.isEmpty()){
 
             for(Map.Entry<String, String> condi : condiciones.entrySet()){
 
@@ -91,10 +93,6 @@ public class usuariosDAO {
 
             ps.executeQuery();
 
-
-
-            
-
         }catch(Exception e){
 
             System.out.print("hubo un error: " + e);
@@ -103,8 +101,80 @@ public class usuariosDAO {
 
     }
 
-    public void eliminarUsuario(){}
+    public void eliminarUsuario(int id){
 
-    public void actualizarUsuario(){}
+        String sql = "delete from Empleados where ID = ?";
+
+        try{
+
+            PreparedStatement ps = this.con.prepareStatement(sql);
+
+            ps.setString(1, String.valueOf(id));
+
+            ps.executeUpdate();
+
+            System.out.print("se ha eliminado el usuario");
+            
+        }catch(Exception e){
+            System.out.print("ha ocurrido un error: " + e);
+        }
+
+    }
+
+    public void actualizarUsuario(int IDusuario, Map<String, String> campos){
+
+        String sql = "update Empleados set";
+
+         List<String> values = new ArrayList<String>();
+
+        if (campos != null && !campos.isEmpty()){
+
+            Iterator<Map.Entry<String, String>> it = campos.entrySet().iterator();
+
+           
+
+            while (it.hasNext()) {
+                Map.Entry<String, String> camp = it.next();
+                boolean esUltimo = !it.hasNext();
+
+                values.add(camp.getValue());
+
+                if (!esUltimo) {
+
+                    sql = sql + " " + camp.getKey() + " = " + "?,";
+                     
+                    
+                } else {
+                    sql = sql + " " + camp.getKey() + " = " + "?";
+                }
+            }
+
+            sql = sql + "where ID = " + String.valueOf(IDusuario);
+
+        }else{
+            System.out.println("introduzca campos a actualizar");
+
+            return;
+        }
+
+        try {
+
+            PreparedStatement ps = this.con.prepareStatement(sql);
+
+            for (int i = 0; i < values.size(); i++) {
+                
+                ps.setString(i + 1, values.get(i));
+
+            }
+
+            ps.executeUpdate();
+
+            
+        } catch (Exception e) {
+            System.out.print("ha ocurrido un error: " + e);
+        }
+        
+        
+    }
 
 }

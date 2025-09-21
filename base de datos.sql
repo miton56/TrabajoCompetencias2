@@ -69,7 +69,23 @@ BEGIN
     FROM Empleados e
     JOIN Asistencia a ON e.ID = a.ID_Empleado
     WHERE a.Fecha = fechaX
-      AND a.Hora_Entrada > horaLimite;
+      AND a.Hora_Salida < horaLimite;
+END$$
+
+DELIMITER ;
+
+-- Empleados inasistencia
+DELIMITER $$
+
+CREATE PROCEDURE EmpleadosInasistencias (
+    IN fechaX DATE
+)
+BEGIN
+    SELECT e.Nombre, e.Apellidos
+    FROM Empleados e
+    LEFT JOIN Asistencia a 
+        ON e.ID = a.ID_Empleado AND a.Fecha = fechaX
+    WHERE a.ID_Empleado IS NULL;
 END$$
 
 DELIMITER ;

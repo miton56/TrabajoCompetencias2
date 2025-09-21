@@ -1,36 +1,33 @@
-package com.mycompany.poryecto_competencias2.modelos;
+package com.mycompany.poryecto_competencias2.DAOs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class loginModelo {
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
+import com.mycompany.poryecto_competencias2.modelos.Login;
 
-    String url = "jdbc:mysql://100.113.173.92:3306/empleados";
-    String user = "ventas";
-    String pass = "ventasMartin";
+public class loginDAO {
+
+    Conexion conect = new Conexion();
 
     Connection con;
 
-    public loginModelo() {
-        try {
-            this.con = DriverManager.getConnection(url, user, pass);
-            System.out.println("Conectado a la BD en loginModelo");
-        } catch (Exception e) {
-            System.out.println("Error al conectar: " + e);
-        }
+    public loginDAO() {
+  
+        this.con = this.conect.getConexion();
     }
 
     // Insertar un nuevo login
-    public void insertarLogin(int idEmpleado, String correo, String contrasena) {
+    public void insertarLogin(Login l) {
         try {
             String consulta = "INSERT INTO Login (ID_Empleado, CorreoUsuario, Contraseña) VALUES (?, ?, ?)";
 
             PreparedStatement statement = con.prepareStatement(consulta);
-            statement.setInt(1, idEmpleado);
-            statement.setString(2, correo);
-            statement.setString(3, contrasena);
+            statement.setInt(1, l.getIdEmpleado());
+            statement.setString(2, l.getCorreo());
+            statement.setString(3, l.getContrasena());
 
             int filas = statement.executeUpdate();
 
@@ -44,13 +41,13 @@ public class loginModelo {
     }
 
     // Validar login (para login.java)
-    public boolean validarLogin(String correo, String contrasena) {
+    public boolean validarLogin(Login l) {
         try {
             String consulta = "SELECT * FROM Login WHERE CorreoUsuario = ? AND Contraseña = ?";
 
             PreparedStatement statement = con.prepareStatement(consulta);
-            statement.setString(1, correo);
-            statement.setString(2, contrasena);
+            statement.setString(1, l.getCorreo());
+            statement.setString(2, l.getContrasena());
 
             ResultSet rs = statement.executeQuery();
 

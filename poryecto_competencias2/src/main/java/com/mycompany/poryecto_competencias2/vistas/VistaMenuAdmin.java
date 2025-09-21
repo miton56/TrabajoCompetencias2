@@ -60,7 +60,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/Usuarios.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/Usuarios.png"))); // NOI18N
         jLabel1.setText("Lista de Empleados");
 
         jPanelReal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Emoji", 0, 12))); // NOI18N
@@ -88,7 +88,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/agregar-usuario.png"))); // NOI18N
+        btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/agregar-usuario.png"))); // NOI18N
         btnAnadir.setText("Añadir Empleado");
         btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,7 +198,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/borrar-usuario.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/borrar-usuario.png"))); // NOI18N
         btnEliminar.setText("Eliminar Empleado");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,6 +354,8 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             tfDireccion.setText("");
             tfContrasena.setText("");
             tfCorreoElectronico.setText("");
+
+            tablaEmpleados.setModel(modelo);
             
         }
     }//GEN-LAST:event_btnAnadirActionPerformed
