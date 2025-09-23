@@ -4,6 +4,10 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import com.mycompany.poryecto_competencias2.Controlador.ControladorUsuarios;
+import com.mycompany.poryecto_competencias2.modelos.Login;
+import com.mycompany.poryecto_competencias2.modelos.usuarios;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,14 +15,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author marti
  */
+
+
+    
+    
 public class VistaLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaLogin
      */
+    
+    
+    
     public VistaLogin() {
         initComponents();
     }
+    
+    
+    public ControladorUsuarios controladorusuario = new ControladorUsuarios();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,12 +145,25 @@ public class VistaLogin extends javax.swing.JFrame {
 
     private void IniciarSesionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarSesionButtonActionPerformed
      if (tfCorreoUsuario.getText().trim().isEmpty() || tfContrasena.getText().trim().isEmpty()) {
-{
             JOptionPane.showMessageDialog(this,"Ingrese todos los campos",
                     "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
-        } else {//Modificar esta parte para que se agregue el modelo
-            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
-            modelo.addRow(new Object[]{nombre, apellido, telefono, rut, direccion, correo, contra});        // TODO add your handling code here:
+        }else {
+        tfCorreoUsuario.getText();
+        tfContrasena.getText();
+        
+        Login login = new Login(0,0, tfCorreoUsuario.getText(), tfContrasena.getText());
+        
+        boolean controladorvalidado;
+        
+        controladorvalidado = controladorusuario.comprobarUsuarios(login);
+        
+        if(controladorvalidado == true){
+            
+            
+            //En base a esto lleva a la pestaña correspodiente 
+        }
+     }       
+        // TODO add your handling code here:
     }//GEN-LAST:event_IniciarSesionButtonActionPerformed
 
     private void tfContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContrasenaActionPerformed

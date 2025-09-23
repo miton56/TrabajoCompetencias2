@@ -4,8 +4,31 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import com.mycompany.poryecto_competencias2.vistas.VistaEmpleadosAtrasados;
+import com.mycompany.poryecto_competencias2.Controlador.ControladorUsuarios;
+import com.mycompany.poryecto_competencias2.DAOs.usuariosDAO;
+import com.mycompany.poryecto_competencias2.modelos.Login;
+import com.mycompany.poryecto_competencias2.modelos.usuarios;
+
+import com.mycompany.poryecto_competencias2.Controlador.Conexion;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
+import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+
+import java.io.FileOutputStream;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
+
+
+
 
 /**
  *
@@ -18,7 +41,10 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
      */
     public VistaMenuAdmin() {
         initComponents();
+        cargarTablaEmpleados();
     }
+    
+    public ControladorUsuarios controladorusuario = new ControladorUsuarios();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +62,6 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         tfNombre = new javax.swing.JTextField();
         javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         tfContrasena = new javax.swing.JTextField();
-        javax.swing.JButton btnLimpiar = new javax.swing.JButton();
         javax.swing.JButton btnAnadir = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tfApellidos = new javax.swing.JTextField();
@@ -49,18 +74,17 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         tfCorreoElectronico = new javax.swing.JTextField();
         javax.swing.JButton btnEliminar = new javax.swing.JButton();
+        javax.swing.JButton btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnGenerarReporteGeneral = new javax.swing.JButton();
-        btnReporteEntradaSalida = new javax.swing.JButton();
-        btnReporteGeneral = new javax.swing.JButton();
+        btnVistaEmpleadosAtrasados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/Usuarios.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/Usuarios.png"))); // NOI18N
         jLabel1.setText("Lista de Empleados");
 
         jPanelReal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Emoji", 0, 12))); // NOI18N
@@ -81,14 +105,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         tfContrasena.setForeground(new java.awt.Color(204, 204, 204));
         tfContrasena.setText("Ingrese una contraseña");
 
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
-        btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/agregar-usuario.png"))); // NOI18N
+        btnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/agregar-usuario.png"))); // NOI18N
         btnAnadir.setText("Añadir Empleado");
         btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +148,21 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/intregracionc2/borrar-usuario.png"))); // NOI18N
+        btnEliminar.setText("Eliminar Empleado");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar campos");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelRealLayout = new javax.swing.GroupLayout(jPanelReal);
         jPanelReal.setLayout(jPanelRealLayout);
         jPanelRealLayout.setHorizontalGroup(
@@ -141,24 +173,22 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             .addComponent(tfTelefono)
             .addComponent(tfRut)
             .addGroup(jPanelRealLayout.createSequentialGroup()
-                .addGroup(jPanelRealLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelRealLayout.createSequentialGroup()
-                        .addComponent(btnAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                    .addGroup(jPanelRealLayout.createSequentialGroup()
-                        .addGroup(jPanelRealLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(btnAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel2)
+            .addComponent(jLabel4)
+            .addComponent(jLabel5)
+            .addComponent(jLabel3)
+            .addComponent(jLabel6)
+            .addComponent(jLabel7)
+            .addComponent(jLabel8)
             .addComponent(tfCorreoElectronico)
             .addComponent(tfDireccion)
+            .addGroup(jPanelRealLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelRealLayout.setVerticalGroup(
             jPanelRealLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +215,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
                 .addComponent(tfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(tfCorreoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -194,17 +224,11 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRealLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/poryecto_competencias2/borrar-usuario.png"))); // NOI18N
-        btnEliminar.setText("Eliminar Empleado");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -219,27 +243,14 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaEmpleados);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Reportes"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Atrasos"));
         jPanel1.setOpaque(false);
 
-        btnGenerarReporteGeneral.setText("Generar un reporte de datos personales");
-        btnGenerarReporteGeneral.addActionListener(new java.awt.event.ActionListener() {
+        btnVistaEmpleadosAtrasados.setText("Visualizar empleados atrasados");
+        btnVistaEmpleadosAtrasados.setBorder(new javax.swing.border.MatteBorder(null));
+        btnVistaEmpleadosAtrasados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarReporteGeneralActionPerformed(evt);
-            }
-        });
-
-        btnReporteEntradaSalida.setText("Generar reporte de entrada  y salida");
-        btnReporteEntradaSalida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteEntradaSalidaActionPerformed(evt);
-            }
-        });
-
-        btnReporteGeneral.setText("Generar un reporte de todos los datos");
-        btnReporteGeneral.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteGeneralActionPerformed(evt);
+                btnVistaEmpleadosAtrasadosActionPerformed(evt);
             }
         });
 
@@ -249,22 +260,17 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGenerarReporteGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporteEntradaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporteGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(btnVistaEmpleadosAtrasados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReporteGeneral)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReporteEntradaSalida)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGenerarReporteGeneral)
-                .addGap(7, 7, 7))
+                .addComponent(btnVistaEmpleadosAtrasados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
+
+        btnVistaEmpleadosAtrasados.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -273,91 +279,102 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelReal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelReal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(183, 183, 183)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
                         .addGap(87, 87, 87))
                     .addGroup(panel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addComponent(jPanelReal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addContainerGap())
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addComponent(jPanelReal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1016, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 543, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(148, Short.MAX_VALUE)
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-            String nombre = tfNombre.getText();
-        String apellido = tfApellidos.getText();
-        String telefono = tfTelefono.getText();
-        String rut = tfRut.getText();
-        String direccion = tfDireccion.getText();
-        String correo = tfCorreoElectronico.getText();
-        String contra = tfContrasena.getText();
- 
-       
-        
-        if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty()||
-                rut.isEmpty()|| direccion.isEmpty()|| correo.isEmpty() || contra.isEmpty()){
-            
-            JOptionPane.showMessageDialog(this,"Ingrese todos los campos",
-                    "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
-        } else {//Modificar esta parte para que se agregue el modelo
-            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
-            modelo.addRow(new Object[]{nombre, apellido, telefono, rut, direccion, correo, contra});
-            
-            tfNombre.setText("");
-            tfApellidos.setText("");
-            tfTelefono.setText("");//Arreglar esto (Agregar campo correo)
-            tfRut.setText("");
-            tfDireccion.setText("");
-            tfContrasena.setText("");
-            tfCorreoElectronico.setText("");
+                                          
+    // 1) Leer valores de los JTextField
+    String nombre = tfNombre.getText().trim();
+    String apellido = tfApellidos.getText().trim();
+    String telefono = tfTelefono.getText().trim();
+    String rut = tfRut.getText().trim();
+    String direccion = tfDireccion.getText().trim();
+    String correo = tfCorreoElectronico.getText().trim();
+    String contra = tfContrasena.getText().trim();
 
-            tablaEmpleados.setModel(modelo);
-            
-        }
+    // 2) Validación
+    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() ||
+        rut.isEmpty() || direccion.isEmpty() || correo.isEmpty() || contra.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese todos los campos",
+                "Intente de nuevo", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        // 3) Crear objeto usuarios con tu constructor
+        usuarios u = new usuarios(nombre, apellido, telefono, rut, direccion, correo, contra);
+
+        // 4) Crear objeto Login (igual que usas en tu VistaLogin)
+        Login l = new Login(0, 0, correo, contra);
+
+        // 5) Llamar al controlador
+        controladorusuario.registrarUsuario(u, l);
+
+        // 6) Añadir fila a la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+        modelo.addRow(new Object[]{ nombre, apellido, telefono, rut, direccion, correo });
+        tablaEmpleados.setModel(modelo);
+
+        // 7) Notificar y limpiar
+        JOptionPane.showMessageDialog(this, "Empleado agregado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        tfNombre.setText("");
+        tfApellidos.setText("");
+        tfTelefono.setText("");
+        tfRut.setText("");
+        tfDireccion.setText("");
+        tfCorreoElectronico.setText("");
+        tfContrasena.setText("");
+        
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al registrar empleado: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -372,37 +389,66 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       int row = tablaEmpleados.getSelectedRow();
-       //Debe servir en base al modelo de base de datos
-       if(row < 0){
-           JOptionPane.showMessageDialog(this,"Por favor Seleccione un empleado",
-                   "Intente de nuevo", JOptionPane.ERROR_MESSAGE); 
-       }else {
-           DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
-           modelo.removeRow(row);
-       }
+                                           
+    int filaSeleccionada = tablaEmpleados.getSelectedRow();
+
+    if(filaSeleccionada == -1){
+        JOptionPane.showMessageDialog(this, "Seleccione un empleado de la tabla",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Tomamos el ID de la tabla (asumimos que está en la primera columna)
+    int idEmpleado = Integer.parseInt(tablaEmpleados.getValueAt(filaSeleccionada, 0).toString());
+
+    // Confirmación de eliminación
+    int opcion = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro que desea eliminar a este empleado?", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+    if(opcion == JOptionPane.YES_OPTION){
+        try {
+            // Eliminamos directamente desde el DAO
+            usuariosDAO dao = new usuariosDAO();
+            dao.eliminarUsuario(idEmpleado);
+
+            // Eliminamos la fila de la tabla
+            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+            modelo.removeRow(filaSeleccionada);
+
+            JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar empleado: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNombreActionPerformed
 
-    private void btnGenerarReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteGeneralActionPerformed
-     //Hacerlo con los datos que entrega la app , sino , con la base de datos,
-    }//GEN-LAST:event_btnGenerarReporteGeneralActionPerformed
+    private void btnVistaEmpleadosAtrasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaEmpleadosAtrasadosActionPerformed
 
-    private void btnReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteGeneralActionPerformed
-       //Ver si el apartado de generar reportes va por la vista implementando las 
-       //librerias necesarias para crear un pdf desde aqui (este incluye hora de slaiday entrada).
-    }//GEN-LAST:event_btnReporteGeneralActionPerformed
+    // Crear instancia de la nueva ventana
+    VistaEmpleadosAtrasados vistaAtrasados = new VistaEmpleadosAtrasados();
+    
+    // Mostrar la ventana
+    vistaAtrasados.setVisible(true);
+    
+    // Opcional: centrar la ventana
+    vistaAtrasados.setLocationRelativeTo(null);
+
+
+
+    }//GEN-LAST:event_btnVistaEmpleadosAtrasadosActionPerformed
 
     private void tfRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfRutActionPerformed
-
-    private void btnReporteEntradaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteEntradaSalidaActionPerformed
-     //Analizar si es necesario enviar datos tipo time hacia la base de datos o hacia donde
-    }//GEN-LAST:event_btnReporteEntradaSalidaActionPerformed
 
     private void tfCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreoElectronicoActionPerformed
         // TODO add your handling code here:
@@ -442,11 +488,36 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             }
         });
     }
+    
+private void cargarTablaEmpleados() {
+    DefaultTableModel model = (DefaultTableModel) tablaEmpleados.getModel();
+    model.setRowCount(0); // limpia la tabla
+
+    try {
+        Connection con = new Conexion().getConexion();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM Empleados");
+
+        while(rs.next()){
+            model.addRow(new Object[]{
+                rs.getString("Nombre"),
+                rs.getString("Apellidos"),
+                rs.getString("Telefono"),
+                rs.getString("Rut"),
+                rs.getString("Direccion"),
+                rs.getString("correo"),
+                rs.getString("contrasenia")
+            });
+        }
+    } catch(Exception e){
+        JOptionPane.showMessageDialog(this, "Error al cargar empleados: " + e.getMessage());
+    }
+}
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenerarReporteGeneral;
-    private javax.swing.JButton btnReporteEntradaSalida;
-    private javax.swing.JButton btnReporteGeneral;
+    private javax.swing.JButton btnVistaEmpleadosAtrasados;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
