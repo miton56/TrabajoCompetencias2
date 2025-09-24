@@ -1,5 +1,6 @@
 package com.mycompany.poryecto_competencias2.Controlador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,13 +62,21 @@ public class ControladorUsuarios {
 
     public usuarios buscarUsuario(Login l){
 
-        Map<String, String> parametros = new HashMap<>();
+        if(l == null){
 
-        System.out.println("ID Empleado: " + l.getIdEmpleado());
+               Map<String, String> parametros = new HashMap<>();
 
-        parametros.put("ID", String.valueOf(l.getIdEmpleado()));
+                System.out.println("ID Empleado: " + l.getIdEmpleado());
 
-        return usuariosDAO.seleccionarUsuarios(parametros);
+                parametros.put("ID", String.valueOf(l.getIdEmpleado()));
+
+                ArrayList<usuarios> users =  usuariosDAO.seleccionarUsuarios(parametros);
+
+        }
+
+     
+
+        return users.get(0);
 
     }
     

@@ -71,7 +71,7 @@ public class usuariosDAO {
 
     }
 
-    public  usuarios seleccionarUsuarios(Map<String, String> condiciones){
+    public  ArrayList<usuarios> seleccionarUsuarios(Map<String, String> condiciones){
 
         String sql = "select * from Empleados";
 
@@ -114,6 +114,8 @@ public class usuariosDAO {
 
             ResultSet rs = ps.executeQuery();
 
+            ArrayList<usuarios> listaUsuarios = new ArrayList<>();
+
             while(rs.next()){
 
                 int id = rs.getInt("ID");
@@ -131,20 +133,24 @@ public class usuariosDAO {
                 usuario = new usuarios(nombre, apellidos, telefono, rut, direccion, "", "");
 
                 usuario.setID(id);
+
+                listaUsuarios.add(usuario);
                 
                 
             }
 
-            return usuario;
+            
+
+            return listaUsuarios;
             
 
         }catch(Exception e){
 
             System.out.print("hubo un error: " + e);
 
-            usuarios u = null;
+            ArrayList<usuarios> listaVacia = new ArrayList<>();
 
-            return u;
+            return listaVacia;
         }
 
     }
