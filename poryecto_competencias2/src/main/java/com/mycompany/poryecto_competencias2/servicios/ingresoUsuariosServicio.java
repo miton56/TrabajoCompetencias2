@@ -1,8 +1,10 @@
 package com.mycompany.poryecto_competencias2.servicios;
 
+import com.mycompany.poryecto_competencias2.DAOs.cargoEmpleadoDAO;
 import com.mycompany.poryecto_competencias2.DAOs.loginDAO;
 import com.mycompany.poryecto_competencias2.DAOs.usuariosDAO;
 import com.mycompany.poryecto_competencias2.modelos.Login;
+import com.mycompany.poryecto_competencias2.modelos.cargo;
 import com.mycompany.poryecto_competencias2.modelos.usuarios;
 
 public class ingresoUsuariosServicio {
@@ -10,6 +12,8 @@ public class ingresoUsuariosServicio {
     private loginDAO Ldao = new loginDAO();
 
     private usuariosDAO Udao = new usuariosDAO();
+
+    private cargoEmpleadoDAO CargoEDao = new cargoEmpleadoDAO();
 
     public ingresoUsuariosServicio(){
 
@@ -22,9 +26,16 @@ public class ingresoUsuariosServicio {
 
         if (idNuevoUsuario != null){
 
+            cargo cargo = new cargo(1,"Vendedor");
+
+            u.setID(idNuevoUsuario);
+
             l.setIdEmpleado(idNuevoUsuario);
 
             Ldao.insertarLogin(l);
+
+            CargoEDao.ingresarRelacion(u, cargo);
+
             
         }
 
