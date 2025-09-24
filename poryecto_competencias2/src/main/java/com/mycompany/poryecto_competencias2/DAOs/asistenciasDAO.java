@@ -51,17 +51,14 @@ public class asistenciasDAO {
 
     public boolean registrarSalida(asistenciasModelo asistencia){
 
-        String sql = "UPDATE Asistencia SET hora_Salida = ?, where fecha = ? and ID_Empleado = ?";
+        String sql = "UPDATE Asistencias SET hora_Salida = ? where fecha = ? and ID_Empleado = ?";
 
         try{
 
              java.sql.PreparedStatement ps = this.con.prepareStatement(sql);
-
-              ps.setInt(3, asistencia.getID_Empleado());
-
-              ps.setDate(2, new Date(asistencia.getFecha().getTime()));
-
-              ps.setTime(1, asistencia.getHora_salida());
+                ps.setTime(1, asistencia.getHora_salida());
+                ps.setDate(2, new Date(asistencia.getFecha().getTime()));
+                ps.setInt(3, asistencia.getID_Empleado());
 
               ps.executeUpdate();
 
@@ -80,3 +77,4 @@ public class asistenciasDAO {
     }
 
 }
+
