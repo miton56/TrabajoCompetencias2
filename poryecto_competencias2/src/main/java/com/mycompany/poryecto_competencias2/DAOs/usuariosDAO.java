@@ -88,6 +88,26 @@ public class usuariosDAO {
             }
         }
 
+        if (!anidados.isEmpty()){
+
+            sql = sql + " where ";
+
+            for (int i = 0; i < anidados.size(); i++){
+
+                boolean esUltimo = i == anidados.size() -1;
+
+                if (!esUltimo){
+
+                    sql = sql + anidados.get(i) + " and ";
+
+                }else{
+
+                    sql = sql + anidados.get(i);
+
+                }
+
+            }}
+
          try{
 
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -108,7 +128,7 @@ public class usuariosDAO {
 
                 String direccion = rs.getString("Direccion");
 
-                usuario = new usuarios(nombre, apellidos, telefono, rut, direccion, rs.getString("Correo"), rs.getString("Contrasenia"));
+                usuario = new usuarios(nombre, apellidos, telefono, rut, direccion, "", "");
 
                 usuario.setID(id);
                 

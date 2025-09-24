@@ -50,12 +50,20 @@ public class ControladorUsuarios {
 
     public boolean comprobarAdmin(usuarios u){
 
-        return CargoEDao.comprobarCargo(u).equals("Administrador");
+        String cargo = CargoEDao.comprobarCargo(u);
+
+        
+
+        System.out.println("Cargo: " + cargo + " Usuario: " + u.getNombre() + " " + u.getApellidos());
+
+        return cargo.equals("Administrador");
     }
 
     public usuarios buscarUsuario(Login l){
 
         Map<String, String> parametros = new HashMap<>();
+
+        System.out.println("ID Empleado: " + l.getIdEmpleado());
 
         parametros.put("ID", String.valueOf(l.getIdEmpleado()));
 
