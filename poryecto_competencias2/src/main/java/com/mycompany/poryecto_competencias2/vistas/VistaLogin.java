@@ -144,26 +144,46 @@ public class VistaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IniciarSesionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarSesionButtonActionPerformed
-     if (tfCorreoUsuario.getText().trim().isEmpty() || tfContrasena.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this,"Ingrese todos los campos",
-                    "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
-        }else {
-        tfCorreoUsuario.getText();
-        tfContrasena.getText();
-        
-        Login login = new Login(0,0, tfCorreoUsuario.getText(), tfContrasena.getText());
-        
-        boolean controladorvalidado;
-        
-        controladorvalidado = controladorusuario.comprobarUsuarios(login);
-        
-        if(controladorvalidado == true){
-            
-            
-            //En base a esto lleva a la pestaña correspodiente 
+    if (tfCorreoUsuario.getText().trim().isEmpty() || tfContrasena.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this,"Ingrese todos los campos",
+                "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String correo = tfCorreoUsuario.getText().trim();
+    String contrasena = tfContrasena.getText().trim();
+
+    // Creamos un Login temporal
+    Login login = new Login(0, 0, correo, contrasena);
+
+    // Verificar si el login es válido
+    boolean loginValido = controladorusuario.comprobarUsuarios(login);
+
+    if (loginValido) {
+        // Crear usuario temporal con correo para comprobar admin
+        usuarios usuario = new usuarios();
+        usuario.setCorreo(correo);
+        // Aquí idealmente debería traer el ID real desde la DB
+
+        // Comprobar si es administrador
+        boolean esAdmin = controladorusuario.comprobarAdmin(usuario);
+
+        if (esAdmin) {
+            // true → Admin
+            new VistaMenuAdmin().setVisible(true);
+        } else {
+            // false → Empleado
+            new VistaMenuEmpleado().setVisible(true);
         }
-     }       
-        // TODO add your handling code here:
+
+        this.dispose(); // Cerrar login
+    } else {
+        JOptionPane.showMessageDialog(this, 
+                "Correo o contraseña incorrectos", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+
     }//GEN-LAST:event_IniciarSesionButtonActionPerformed
 
     private void tfContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContrasenaActionPerformed
