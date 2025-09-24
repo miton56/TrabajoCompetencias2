@@ -42,7 +42,7 @@ public class ControladorUsuarios {
 
         Map<String, String> parametros = new HashMap<>();
 
-        parametros.put("CorreoUsuario", String.valueOf(u.getCorreo()));
+        parametros.put("CorreoUsuario", String.valueOf(l.getCorreo()));
 
         return logDAo.seleccionarLogin(parametros);
 
