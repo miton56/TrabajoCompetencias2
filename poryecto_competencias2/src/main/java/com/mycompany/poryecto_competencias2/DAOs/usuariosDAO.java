@@ -71,12 +71,13 @@ public class usuariosDAO {
 
     }
 
-    public void seleccionarUsuarios(Map<String, String> condiciones){
+    public  usuarios seleccionarUsuarios(Map<String, String> condiciones){
 
         String sql = "select * from Empleados";
 
         List<String> anidados = new ArrayList<>();
         
+        usuarios usuario = null;
 
         if (condiciones != null && !condiciones.isEmpty()){
 
@@ -91,12 +92,39 @@ public class usuariosDAO {
 
             PreparedStatement ps = this.con.prepareStatement(sql);
 
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+
+                int id = rs.getInt("ID");
+
+                String nombre = rs.getString("Nombre");
+
+                String apellidos = rs.getString("Apellidos");
+
+                String telefono = rs.getString("Telefono");
+
+                String rut = rs.getString("Rut");
+
+                String direccion = rs.getString("Direccion");
+
+                usuario = new usuarios(nombre, apellidos, telefono, rut, direccion, rs.getString("Correo"), rs.getString("Contrasenia"));
+
+                usuario.setID(id);
+                
+                
+            }
+
+            return usuario;
+            
 
         }catch(Exception e){
 
             System.out.print("hubo un error: " + e);
 
+            usuarios u = null;
+
+            return u;
         }
 
     }

@@ -3,6 +3,7 @@ package com.mycompany.poryecto_competencias2.DAOs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 
 import com.mycompany.poryecto_competencias2.Controlador.Conexion;
 import com.mycompany.poryecto_competencias2.modelos.Login;
@@ -56,5 +57,28 @@ public class loginDAO {
             System.out.println("Error al validar login: " + e);
             return false;
         }
+    }
+
+    public Login seleccionarLogin(Map<String, String> parametros) {
+        Login login = null;
+        try {
+            String consulta = "SELECT * FROM Login WHERE CorreoUsuario = ?";
+
+            PreparedStatement statement = con.prepareStatement(consulta);
+            statement.setString(1, parametros.get("CorreoUsuario"));
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                login = new Login();
+                login.setIdEmpleado(rs.getInt("ID_Empleado"));
+                login.setCorreo(rs.getString("CorreoUsuario"));
+                login.setContrasena(rs.getString("Contraseña"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al seleccionar login: " + e);
+        }
+        return login;
     }
 }

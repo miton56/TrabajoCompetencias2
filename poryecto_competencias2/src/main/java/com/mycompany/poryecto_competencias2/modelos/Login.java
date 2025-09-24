@@ -13,6 +13,10 @@ public class Login {
         this.contrasena = contrasena;
     }
 
+       public Login() {
+      
+    }
+
     // Getters y Setters
     public int getIdLogin() {
         return idLogin;
