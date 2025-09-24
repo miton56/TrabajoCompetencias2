@@ -161,7 +161,7 @@ public class VistaLogin extends javax.swing.JFrame {
 
     if (loginValido) {
         // Crear usuario temporal con correo para comprobar admin
-        usuarios usuario = new usuarios();
+        usuarios usuario = controladorusuario.buscarUsuario(login); // Esto debe buscar usuario por el objeto login
         usuario.setCorreo(correo);
         // Aquí idealmente debería traer el ID real desde la DB
 
