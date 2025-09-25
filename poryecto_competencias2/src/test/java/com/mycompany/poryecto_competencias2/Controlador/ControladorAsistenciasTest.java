@@ -1,11 +1,13 @@
 package com.mycompany.poryecto_competencias2.Controlador;
 
-import com.mycompany.poryecto_competencias2.modelos.asistenciasModelo;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import com.mycompany.poryecto_competencias2.modelos.asistenciasModelo;
 
 public class ControladorAsistenciasTest {
 
@@ -17,7 +19,7 @@ public class ControladorAsistenciasTest {
        
         // Convertimos String a Date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fecha = sdf.parse("2025-09-24");
+        Date fecha = sdf.parse("2025-09-23");
         asistencia.setFecha(fecha);
 
         // Convertimos String a Time
