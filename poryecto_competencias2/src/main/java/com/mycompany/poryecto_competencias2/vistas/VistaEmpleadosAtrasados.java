@@ -6,8 +6,10 @@ package com.mycompany.poryecto_competencias2.vistas;
 
 import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
 import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+import java.time.LocalTime;
 
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,12 +34,14 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaAtrasados = new javax.swing.JTable();
         btnVolverAVistaMenuEmpleado = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        txtFecha = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaAtrasados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -48,7 +52,7 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
                 "Empleado", "Hora de atraso", "Dia de atraso"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaAtrasados);
 
         btnVolverAVistaMenuEmpleado.setText("Volver");
         btnVolverAVistaMenuEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -57,24 +61,41 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
             }
         });
 
+        btnBuscar.setText("buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        txtFecha.setText("fecha (yyyy-mm-dd)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 604, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnBuscar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addContainerGap())
@@ -92,8 +113,14 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     vistaMenuAdmin.setVisible(true);
     
     // Opcional: centrar la ventana
-    vistaMenuAdmin.setLocationRelativeTo(null);        // TODO add your handling code here:
+    vistaMenuAdmin.setLocationRelativeTo(null);   
+    
+    this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_btnVolverAVistaMenuEmpleadoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       llenarCampos();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,17 +158,35 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaAtrasados;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVolverAVistaMenuEmpleado;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 
     private void llenarCampos(){
 
         ControladorReportesDAO cont = new ControladorReportesDAO();
+        
+        java.sql.Date fecha = java.sql.Date.valueOf(txtFecha.getText());
+        
+        java.sql.Time hora = java.sql.Time.valueOf("09:30:00");
+        
+        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados(fecha, hora);
 
-        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados();
-
-        DefaultTableModel modelo = (DefaultTableModel) tablaAtrasados.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) TablaAtrasados.getModel();
+        
+        modelo.setRowCount(0);
+        
+        for(ReporteAtrasoModelo reporte : atrasos){
+            
+            modelo.addRow(new Object[]{
+               reporte.getNombre(),
+               reporte.getHoraEntrada(),
+               reporte.getFecha()
+            });
+        }
+        
     }
 }

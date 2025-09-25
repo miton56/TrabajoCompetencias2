@@ -19,9 +19,10 @@ public class VistaMenuEmpleado extends javax.swing.JFrame {
 
     asistenciasModelo asistencia;
     public static int idEmpleado; 
-    public VistaMenuEmpleado() {
+    public VistaMenuEmpleado(int id) {
         initComponents();
         asistencia = new asistenciasModelo();
+        idEmpleado = id;
     }
 
     
@@ -211,7 +212,7 @@ public class HoraInternet {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaMenuEmpleado().setVisible(true);
+                new VistaMenuEmpleado(idEmpleado).setVisible(true);
             }
         });
     }

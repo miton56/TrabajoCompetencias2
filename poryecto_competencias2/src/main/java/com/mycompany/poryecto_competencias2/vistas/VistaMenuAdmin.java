@@ -80,6 +80,8 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         tablaEmpleados = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnVistaEmpleadosAtrasados = new javax.swing.JButton();
+        btnVistaEmpleadosAtrasados2 = new javax.swing.JButton();
+        btnVistaEmpleadosAtrasados1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -241,7 +243,8 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaEmpleados);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Atrasos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Reportes"));
+        jPanel1.setToolTipText("");
         jPanel1.setOpaque(false);
 
         btnVistaEmpleadosAtrasados.setText("Visualizar empleados atrasados");
@@ -252,20 +255,44 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnVistaEmpleadosAtrasados2.setText("Visualizar empleados inasistentes");
+        btnVistaEmpleadosAtrasados2.setBorder(new javax.swing.border.MatteBorder(null));
+        btnVistaEmpleadosAtrasados2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVistaEmpleadosAtrasados2ActionPerformed(evt);
+            }
+        });
+
+        btnVistaEmpleadosAtrasados1.setText("Visualizar empleados salida antes");
+        btnVistaEmpleadosAtrasados1.setBorder(new javax.swing.border.MatteBorder(null));
+        btnVistaEmpleadosAtrasados1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVistaEmpleadosAtrasados1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnVistaEmpleadosAtrasados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVistaEmpleadosAtrasados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVistaEmpleadosAtrasados1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVistaEmpleadosAtrasados2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnVistaEmpleadosAtrasados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVistaEmpleadosAtrasados1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVistaEmpleadosAtrasados2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         btnVistaEmpleadosAtrasados.getAccessibleContext().setAccessibleName("");
@@ -280,36 +307,43 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelReal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(jPanelReal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("Reportes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(188, 188, 188)
+                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -435,7 +469,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
   
     vistaAtrasados.setLocationRelativeTo(null);
 
-
+    this.dispose();
 
     }//GEN-LAST:event_btnVistaEmpleadosAtrasadosActionPerformed
 
@@ -446,6 +480,30 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     private void tfCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreoElectronicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCorreoElectronicoActionPerformed
+
+    private void btnVistaEmpleadosAtrasados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaEmpleadosAtrasados1ActionPerformed
+     VistaEmpleadosSalidaAntes vistaSalida = new VistaEmpleadosSalidaAntes();
+    
+ 
+    vistaSalida.setVisible(true);
+    
+  
+    vistaSalida.setLocationRelativeTo(null);
+
+    this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVistaEmpleadosAtrasados1ActionPerformed
+
+    private void btnVistaEmpleadosAtrasados2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaEmpleadosAtrasados2ActionPerformed
+    VistaEmpleadosInasistentes vistaInasistente = new VistaEmpleadosInasistentes();
+    
+ 
+    vistaInasistente.setVisible(true);
+    
+  
+    vistaInasistente.setLocationRelativeTo(null);
+
+    this.dispose();          // TODO add your handling code here:
+    }//GEN-LAST:event_btnVistaEmpleadosAtrasados2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,6 +566,8 @@ private void cargarTablaEmpleados() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVistaEmpleadosAtrasados;
+    private javax.swing.JButton btnVistaEmpleadosAtrasados1;
+    private javax.swing.JButton btnVistaEmpleadosAtrasados2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

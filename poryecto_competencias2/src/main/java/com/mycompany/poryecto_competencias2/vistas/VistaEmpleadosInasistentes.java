@@ -4,6 +4,12 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
+import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author marti
@@ -54,7 +60,12 @@ public class VistaEmpleadosInasistentes extends javax.swing.JFrame {
             }
         });
 
-        tfBuscarFecha.setText("Ingrese una fecha (Ej: 19-01-2025)");
+        tfBuscarFecha.setText("Ingrese una fecha (Ej: 2025-09-01)");
+        tfBuscarFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfBuscarFechaActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,12 +117,18 @@ public class VistaEmpleadosInasistentes extends javax.swing.JFrame {
     vistaMenuAdmin.setVisible(true);
     
     // Opcional: centrar la ventana
-    vistaMenuAdmin.setLocationRelativeTo(null);        // TODO add your handling code here:
+    vistaMenuAdmin.setLocationRelativeTo(null);    
+
+    this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_btnVolverAVistaMenuEmpleadoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        llenarCampos();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tfBuscarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBuscarFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfBuscarFechaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,10 +160,34 @@ public class VistaEmpleadosInasistentes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaEmpleadosAtrasados().setVisible(true);
+                new VistaEmpleadosInasistentes().setVisible(true);
             }
         });
     }
+    
+    private void llenarCampos(){
+
+        ControladorReportesDAO cont = new ControladorReportesDAO();
+        
+        java.sql.Date fecha = java.sql.Date.valueOf(tfBuscarFecha.getText());
+        
+        
+        List<ReporteInasistenciaModelo> inasistente = cont.mostrarInasistencias(fecha);
+
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        modelo.setRowCount(0);
+        
+        for(ReporteInasistenciaModelo reporte : inasistente){
+            
+            modelo.addRow(new Object[]{
+               reporte.getNombre(),
+               reporte.getApellidos(),
+               fecha
+            });
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

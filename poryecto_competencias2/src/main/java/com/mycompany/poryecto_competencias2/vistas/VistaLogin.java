@@ -175,7 +175,7 @@ public class VistaLogin extends javax.swing.JFrame {
             new VistaMenuAdmin().setVisible(true);
         } else {
             // false → Empleado
-            new VistaMenuEmpleado().setVisible(true);
+            new VistaMenuEmpleado(usuario.getID()).setVisible(true);
         }
 
         this.dispose(); // Cerrar login

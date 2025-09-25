@@ -90,8 +90,11 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfBuscarFecha">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingrese una fecha (Ej: 19-01-2025)"/>
+        <Property name="text" type="java.lang.String" value="Ingrese una fecha (Ej: 2025-09-01)"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfBuscarFechaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
