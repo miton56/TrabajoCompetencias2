@@ -4,6 +4,11 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
+import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+
+import java.util.List;
+
 /**
  *
  * @author marti
@@ -130,4 +135,13 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarCampos(){
+
+        ControladorReportesDAO cont = new ControladorReportesDAO();
+
+        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaAtrasados.getModel();
+    }
 }

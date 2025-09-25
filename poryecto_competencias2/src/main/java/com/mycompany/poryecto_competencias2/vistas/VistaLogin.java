@@ -163,7 +163,7 @@ public class VistaLogin extends javax.swing.JFrame {
         
         Login login2 = controladorusuario.buscarLogin(login);
         // Crear usuario temporal con correo para comprobar admin
-        usuarios usuario = controladorusuario.buscarUsuario(login2); // Esto debe buscar usuario por el objeto login
+        usuarios usuario = controladorusuario.buscarUsuario(login2).get(0); // Esto debe buscar usuario por el objeto login
         
         // Aquí idealmente debería traer el ID real desde la DB
 

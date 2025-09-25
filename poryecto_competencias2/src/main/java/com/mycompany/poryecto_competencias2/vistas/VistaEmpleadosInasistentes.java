@@ -8,12 +8,12 @@ package com.mycompany.poryecto_competencias2.vistas;
  *
  * @author marti
  */
-public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
+public class VistaEmpleadosInasistentes extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaEmpleadosAtrasados
      */
-    public VistaEmpleadosAtrasados() {
+    public VistaEmpleadosInasistentes() {
         initComponents();
     }
 

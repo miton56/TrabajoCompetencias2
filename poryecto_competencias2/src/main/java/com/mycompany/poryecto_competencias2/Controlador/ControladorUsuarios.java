@@ -60,9 +60,9 @@ public class ControladorUsuarios {
         return cargo.equals("Administrador");
     }
 
-    public usuarios buscarUsuario(Login l){
+    public ArrayList<usuarios> buscarUsuario(Login l){
 
-        if(l == null){
+        if(l != null){
 
                Map<String, String> parametros = new HashMap<>();
 
@@ -71,12 +71,22 @@ public class ControladorUsuarios {
                 parametros.put("ID", String.valueOf(l.getIdEmpleado()));
 
                 ArrayList<usuarios> users =  usuariosDAO.seleccionarUsuarios(parametros);
+                
+                return users;
+
+        }else{
+
+            Map<String, String> parametros = new HashMap<>();
+
+            ArrayList<usuarios> users =  usuariosDAO.seleccionarUsuarios(parametros);
+                
+            return users;
 
         }
 
      
 
-        return users.get(0);
+        
 
     }
     

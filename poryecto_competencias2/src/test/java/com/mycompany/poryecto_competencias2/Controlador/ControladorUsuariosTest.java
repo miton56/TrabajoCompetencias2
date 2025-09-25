@@ -1,13 +1,17 @@
 package com.mycompany.poryecto_competencias2.Controlador;
 
-import com.mycompany.poryecto_competencias2.modelos.Login;
-import com.mycompany.poryecto_competencias2.modelos.usuarios;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import com.mycompany.poryecto_competencias2.modelos.Login;
+import com.mycompany.poryecto_competencias2.modelos.usuarios;
 
 public class ControladorUsuariosTest {
     
@@ -68,7 +72,7 @@ public class ControladorUsuariosTest {
     @Test
     public void testBuscarUsuario() {
         Login loginOriginal = new Login(1, 0, "juan.perez@empresa.com", "passJuan123");
-        usuarios usuarioBuscado = controlador.buscarUsuario(loginOriginal);
+        usuarios usuarioBuscado = controlador.buscarUsuario(loginOriginal).get(0);
         assertNotNull("El usuario debería encontrarse en la base de datos", usuarioBuscado);
         assertEquals("Juan", usuarioBuscado.getNombre());
     }
