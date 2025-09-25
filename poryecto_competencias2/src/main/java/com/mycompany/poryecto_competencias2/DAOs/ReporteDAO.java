@@ -1,13 +1,17 @@
 package com.mycompany.poryecto_competencias2.DAOs;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.mycompany.poryecto_competencias2.Controlador.Conexion;
 import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
-import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
 import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
 
 public class ReporteDAO {
 
@@ -72,7 +76,6 @@ public class ReporteDAO {
                 ReporteInasistenciaModelo rep = new ReporteInasistenciaModelo();
                 rep.setNombre(rs.getString("Nombre"));
                 rep.setApellidos(rs.getString("Apellidos"));
-                rep.setFecha(rs.getDate("Fecha"));
                 lista.add(rep);
             }
         } catch (Exception e) {
