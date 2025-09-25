@@ -4,9 +4,12 @@
  */
 package com.mycompany.poryecto_competencias2.vistas;
 
+import com.mycompany.poryecto_competencias2.Controlador.ControladorAsistencias;
+import com.mycompany.poryecto_competencias2.modelos.asistenciasModelo;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,11 +17,12 @@ import java.util.Date;
  */
 public class VistaMenuEmpleado extends javax.swing.JFrame {
 
-
+    asistenciasModelo asistencia;
     public static int idEmpleado; // aquí guardamos el ID del empleado logueado
 
     public VistaMenuEmpleado() {
         initComponents();
+        asistencia = new asistenciasModelo();
     }
 
     // Método para recibir el idEmpleado desde el login
@@ -57,6 +61,11 @@ public class VistaMenuEmpleado extends javax.swing.JFrame {
         });
 
         btnSalida.setText("Registrar Salida");
+        btnSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -136,8 +145,42 @@ public class HoraInternet {
 }
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        // TODO add your handling code here:
+        
+        ControladorAsistencias con = new ControladorAsistencias();
+        
+        asistencia.setHora_entrada(new java.sql.Time(HoraInternet.getHoraInternet().getTime()));
+        
+        asistencia.setFecha(new java.sql.Date(HoraInternet.getHoraInternet().getTime()));
+        
+        asistencia.setID_Empleado(idEmpleado);
+        
+        boolean resultado = con.registrarEntrada(asistencia);
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(this,"Entrada registrada con exito",
+                "Realizado",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+        JOptionPane.showMessageDialog(this,"Hubo un error",
+                "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEntradaActionPerformed
+
+    private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
+         ControladorAsistencias con = new ControladorAsistencias();
+        
+        asistencia.setHora_salida(new java.sql.Time(HoraInternet.getHoraInternet().getTime()));
+       
+        
+        boolean resultado = con.registrarSalida(asistencia);
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(this,"Salida registrada con exito",
+                "Realizado",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+        JOptionPane.showMessageDialog(this,"Hubo un error, recuerde ingresar entrada antes que la salida",
+                "Intente de nuevo",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**
      * @param args the command line arguments

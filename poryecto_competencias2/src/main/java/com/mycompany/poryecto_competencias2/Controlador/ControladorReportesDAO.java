@@ -1,22 +1,22 @@
 package com.mycompany.poryecto_competencias2.Controlador;
 
-import com.mycompany.poryecto_competencias2.DAOs.ReporteDAO;
-import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
-import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
-import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
-
-
-import javax.swing.table.DefaultTableModel;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import com.mycompany.poryecto_competencias2.DAOs.ReporteDAO;
+import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteInasistenciaModelo;
+import com.mycompany.poryecto_competencias2.modelos.ReporteSalidaModelo;
 
 public class ControladorReportesDAO {
 
     private ReporteDAO reporteDAO = new ReporteDAO();
 
     // Mostrar atrasados
-    public  List<ReporteAtrasoModelo> mostrarAtrasados(javax.swing.JTable tabla, Date fecha, Time horaLimite) {
+    public  List<ReporteAtrasoModelo> mostrarAtrasados(Date fecha, Time horaLimite) {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Nombre", "Apellidos", "Fecha", "Hora Entrada"});
 
@@ -26,7 +26,7 @@ public class ControladorReportesDAO {
     }
 
     // Mostrar salidas antes
-    public List<ReporteSalidaModelo> mostrarSalidas(DefaultTableModel modelo, Date fecha, Time horaLimite) {
+    public List<ReporteSalidaModelo> mostrarSalidas(Date fecha, Time horaLimite) {
 
         List<ReporteSalidaModelo> salidas = reporteDAO.obtenerSalidasAnticipadas(fecha, horaLimite);
 
@@ -34,7 +34,7 @@ public class ControladorReportesDAO {
     }
 
     // Mostrar inasistencias
-    public List<ReporteInasistenciaModelo> mostrarInasistencias(DefaultTableModel modelo, Date fecha) {
+    public List<ReporteInasistenciaModelo> mostrarInasistencias(Date fecha) {
 
         List<ReporteInasistenciaModelo> inasistencias = reporteDAO.obtenerInasistencias(fecha);
 

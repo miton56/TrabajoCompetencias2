@@ -25,6 +25,7 @@ import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
 import java.io.FileOutputStream;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -488,25 +489,19 @@ private void cargarTablaEmpleados() {
 
     ControladorUsuarios controlador = new ControladorUsuarios();
 
+    Login l = null;
+
+    ArrayList<usuarios> users = controlador.buscarUsuario(l);
     
+    for(usuarios u: users){
 
-    try {
-        Connection con = new Conexion().getConexion();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM Empleados");
-
-        while(rs.next()){
-            model.addRow(new Object[]{
-                rs.getString("Nombre"),
-                rs.getString("Apellidos"),
-                rs.getString("Telefono"),
-                rs.getString("Rut"),
-                rs.getString("Direccion"),
-
-            });
-        }
-    } catch(Exception e){
-        JOptionPane.showMessageDialog(this, "Error al cargar empleados: " + e.getMessage());
+        model.addRow(new Object[]{
+            u.getNombre(),
+            u.getApellidos(),
+            u.getTelefono(),
+            u.getRut(),
+            u.getDireccion()
+        });
     }
 }
 

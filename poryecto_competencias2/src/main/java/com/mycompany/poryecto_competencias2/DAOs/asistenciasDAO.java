@@ -18,7 +18,7 @@ public class asistenciasDAO {
 
     public boolean  registrarEntrada(asistenciasModelo asistencia){
 
-        String sql = "INSERT into Asistencias (IDEmpleado, Fecha, HoraEntrada) Values (?,?,?)";
+        String sql = "INSERT into Asistencia (ID_Empleado, Fecha, Hora_Entrada, Hora_Salida) Values (?,?,?,?)";
 
         try{
 
@@ -29,6 +29,8 @@ public class asistenciasDAO {
             ps.setDate(2, new Date(asistencia.getFecha().getTime()));
 
             ps.setTime(3, asistencia.getHora_entrada());
+
+            ps.setTime(4, null);
 
             ps.executeUpdate();
 
@@ -51,7 +53,7 @@ public class asistenciasDAO {
 
     public boolean registrarSalida(asistenciasModelo asistencia){
 
-        String sql = "UPDATE Asistencias SET hora_Salida = ? where fecha = ? and ID_Empleado = ?";
+        String sql = "UPDATE Asistencia SET Hora_Salida = ? where fecha = ? and ID_Empleado = ?";
 
         try{
 
