@@ -32,14 +32,14 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaAtrasados = new javax.swing.JTable();
         btnVolverAVistaMenuEmpleado = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         tfBuscarPorFechaa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaAtrasados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -50,7 +50,7 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
                 "Empleado", "Hora de atraso", "Dia de atraso"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaAtrasados);
 
         btnVolverAVistaMenuEmpleado.setText("Volver");
         btnVolverAVistaMenuEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -153,19 +153,30 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaAtrasados;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVolverAVistaMenuEmpleado;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField tfBuscarPorFechaa;
     // End of variables declaration//GEN-END:variables
 
     private void llenarCampos(){
+    ControladorReportesDAO cont = new ControladorReportesDAO();
 
-        ControladorReportesDAO cont = new ControladorReportesDAO();
+    // Aquí deberías pasar fecha y hora limite. Ejemplo rápido:
+    java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
+    java.sql.Time horaLimite = new java.sql.Time(System.currentTimeMillis());
 
-        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados();
+    List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados(fecha, horaLimite);
 
-        DefaultTableModel modelo = (DefaultTableModel) tablaAtrasados.getModel();
+    DefaultTableModel modelo = (DefaultTableModel) TablaAtrasados.getModel();
+    modelo.setRowCount(0); // limpiar tabla antes de llenarla
+
+    for (ReporteAtrasoModelo atraso : atrasos) {
+        modelo.addRow(new Object[]{
+            atraso.getNombre(),
+            atraso.getHoraEntrada(),
+            atraso.getFecha()
+        });
     }
-}
+    }

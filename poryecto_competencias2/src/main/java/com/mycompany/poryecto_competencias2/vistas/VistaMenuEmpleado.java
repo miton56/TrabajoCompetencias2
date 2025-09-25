@@ -18,14 +18,13 @@ import javax.swing.JOptionPane;
 public class VistaMenuEmpleado extends javax.swing.JFrame {
 
     asistenciasModelo asistencia;
-    public static int idEmpleado; // aquí guardamos el ID del empleado logueado
-
+    public static int idEmpleado; 
     public VistaMenuEmpleado() {
         initComponents();
         asistencia = new asistenciasModelo();
     }
 
-    // Método para recibir el idEmpleado desde el login
+    
     public void setIdEmpleado(int id) {
         VistaMenuEmpleado.idEmpleado = id;
     }
@@ -139,7 +138,7 @@ public class HoraInternet {
             return new Date(date);
         } catch (Exception e) {
             System.out.println("Error al obtener hora de internet: " + e.getMessage());
-            return new Date(); // fallback: hora local
+            return new Date(); 
         }
     }
 }

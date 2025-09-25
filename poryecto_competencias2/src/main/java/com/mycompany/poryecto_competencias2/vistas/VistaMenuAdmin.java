@@ -320,7 +320,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
                                           
-    // 1) Leer valores de los JTextField
+   
     String nombre = tfNombre.getText().trim();
     String apellido = tfApellidos.getText().trim();
     String telefono = tfTelefono.getText().trim();
@@ -329,7 +329,6 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     String correo = tfCorreoElectronico.getText().trim();
     String contra = tfContrasena.getText().trim();
 
-    // 2) Validación
     if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() ||
         rut.isEmpty() || direccion.isEmpty() || correo.isEmpty() || contra.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Ingrese todos los campos",
@@ -338,21 +337,21 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     }
 
     try {
-        // 3) Crear objeto usuarios con tu constructor
+        
         usuarios u = new usuarios(nombre, apellido, telefono, rut, direccion, correo, contra);
 
-        // 4) Crear objeto Login (igual que usas en tu VistaLogin)
+     
         Login l = new Login(0, 0, correo, contra);
 
-        // 5) Llamar al controlador
+      
         controladorusuario.registrarUsuario(u, l);
 
-        // 6) Añadir fila a la tabla
+      
         DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
         modelo.addRow(new Object[]{ nombre, apellido, telefono, rut, direccion, correo });
         tablaEmpleados.setModel(modelo);
 
-        // 7) Notificar y limpiar
+       
         JOptionPane.showMessageDialog(this, "Empleado agregado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         tfNombre.setText("");
         tfApellidos.setText("");
@@ -374,7 +373,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         tfNombre.setText("");
         tfApellidos.setText("");
-        tfTelefono.setText("");//Arreglar esto (Agregar Campo correo)
+        tfTelefono.setText("");
         tfRut.setText("");
         tfDireccion.setText("");
         tfCorreoElectronico.setText("");
@@ -392,21 +391,21 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
         return;
     }
 
-    // Tomamos el ID de la tabla (asumimos que está en la primera columna)
+  
     int idEmpleado = Integer.parseInt(tablaEmpleados.getValueAt(filaSeleccionada, 0).toString());
 
-    // Confirmación de eliminación
+   
     int opcion = JOptionPane.showConfirmDialog(this, 
             "¿Está seguro que desea eliminar a este empleado?", 
             "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
     if(opcion == JOptionPane.YES_OPTION){
         try {
-            // Eliminamos directamente desde el DAO
+           
             usuariosDAO dao = new usuariosDAO();
             dao.eliminarUsuario(idEmpleado);
 
-            // Eliminamos la fila de la tabla
+          
             DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
             modelo.removeRow(filaSeleccionada);
 
@@ -427,13 +426,13 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
 
     private void btnVistaEmpleadosAtrasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaEmpleadosAtrasadosActionPerformed
 
-    // Crear instancia de la nueva ventana
+   
     VistaEmpleadosAtrasados vistaAtrasados = new VistaEmpleadosAtrasados();
     
-    // Mostrar la ventana
+ 
     vistaAtrasados.setVisible(true);
     
-    // Opcional: centrar la ventana
+  
     vistaAtrasados.setLocationRelativeTo(null);
 
 
@@ -485,7 +484,7 @@ public class VistaMenuAdmin extends javax.swing.JFrame {
     
 private void cargarTablaEmpleados() {
     DefaultTableModel model = (DefaultTableModel) tablaEmpleados.getModel();
-    model.setRowCount(0); // limpia la tabla
+    model.setRowCount(0); 
 
     ControladorUsuarios controlador = new ControladorUsuarios();
 
