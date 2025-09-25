@@ -6,12 +6,16 @@ package com.mycompany.poryecto_competencias2.vistas;
 
 import com.mycompany.poryecto_competencias2.Controlador.ControladorReportesDAO;
 import com.mycompany.poryecto_competencias2.modelos.ReporteAtrasoModelo;
+import java.sql.Date;
+import java.sql.Time;
 
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author marti
+ * @author marti0
  */
 public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
 
@@ -60,6 +64,11 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
         });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tfBuscarPorFechaa.setText("Busque una fecha en el formato (Ej: 19-06-2025)");
 
@@ -117,6 +126,18 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     vistaMenuAdmin.setLocationRelativeTo(null);        // TODO add your handling code here:
     }//GEN-LAST:event_btnVolverAVistaMenuEmpleadoActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       
+        Date fecha = java.sql.Date.valueOf(tfBuscarPorFechaa.getText());
+        
+        Time hora = java.sql.Time.valueOf("09:30:00");
+
+        llenarCampos(fecha, hora);
+        
+        
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,12 +181,22 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     private javax.swing.JTextField tfBuscarPorFechaa;
     // End of variables declaration//GEN-END:variables
 
-    private void llenarCampos(){
+    private void llenarCampos(Date fecha, Time hora){
 
         ControladorReportesDAO cont = new ControladorReportesDAO();
 
-        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados();
+        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados(fecha, hora);
 
-        DefaultTableModel modelo = (DefaultTableModel) tablaAtrasados.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        for(ReporteAtrasoModelo reporte : atrasos){
+
+            modelo.addRow(new Object[]{
+                reporte.getNombre(),
+                reporte.getHoraEntrada(),
+                reporte.getFecha()
+            });
+
+        }
     }
 }
