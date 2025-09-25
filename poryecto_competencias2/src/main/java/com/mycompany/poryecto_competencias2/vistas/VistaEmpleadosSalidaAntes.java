@@ -29,8 +29,6 @@ public class VistaEmpleadosSalidaAntes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnVolverAVistaMenuEmpleado = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        tfBuscarPorFechaa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,7 +40,7 @@ public class VistaEmpleadosSalidaAntes extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Hora de Salida"
+                "Empleado", "Hora de atraso", "Dia de atraso"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -53,10 +51,6 @@ public class VistaEmpleadosSalidaAntes extends javax.swing.JFrame {
                 btnVolverAVistaMenuEmpleadoActionPerformed(evt);
             }
         });
-
-        btnBuscar.setText("Buscar");
-
-        tfBuscarPorFechaa.setText("Busque en el formato (Ej:19-06-2025)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,31 +64,15 @@ public class VistaEmpleadosSalidaAntes extends javax.swing.JFrame {
                         .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 604, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(266, 266, 266)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tfBuscarPorFechaa, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(651, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBuscar)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tfBuscarPorFechaa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(470, Short.MAX_VALUE)))
         );
 
         pack();
@@ -148,10 +126,8 @@ public class VistaEmpleadosSalidaAntes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVolverAVistaMenuEmpleado;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField tfBuscarPorFechaa;
     // End of variables declaration//GEN-END:variables
 }

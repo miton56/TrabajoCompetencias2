@@ -32,14 +32,12 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaAtrasados = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         btnVolverAVistaMenuEmpleado = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        tfBuscarPorFechaa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TablaAtrasados.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -50,7 +48,7 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
                 "Empleado", "Hora de atraso", "Dia de atraso"
             }
         ));
-        jScrollPane1.setViewportView(TablaAtrasados);
+        jScrollPane1.setViewportView(jTable1);
 
         btnVolverAVistaMenuEmpleado.setText("Volver");
         btnVolverAVistaMenuEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -58,10 +56,6 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
                 btnVolverAVistaMenuEmpleadoActionPerformed(evt);
             }
         });
-
-        btnBuscar.setText("Buscar");
-
-        tfBuscarPorFechaa.setText("Busque una fecha en el formato (Ej: 19-06-2025)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,31 +69,15 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
                         .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 604, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(284, 284, 284)
-                .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tfBuscarPorFechaa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(630, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBuscar)
-                .addGap(1, 1, 1)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVolverAVistaMenuEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tfBuscarPorFechaa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(470, Short.MAX_VALUE)))
         );
 
         pack();
@@ -153,30 +131,17 @@ public class VistaEmpleadosAtrasados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaAtrasados;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVolverAVistaMenuEmpleado;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField tfBuscarPorFechaa;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
     private void llenarCampos(){
-    ControladorReportesDAO cont = new ControladorReportesDAO();
 
-    // Aquí deberías pasar fecha y hora limite. Ejemplo rápido:
-    java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
-    java.sql.Time horaLimite = new java.sql.Time(System.currentTimeMillis());
+        ControladorReportesDAO cont = new ControladorReportesDAO();
 
-    List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados(fecha, horaLimite);
+        List<ReporteAtrasoModelo> atrasos = cont.mostrarAtrasados();
 
-    DefaultTableModel modelo = (DefaultTableModel) TablaAtrasados.getModel();
-    modelo.setRowCount(0); // limpiar tabla antes de llenarla
-
-    for (ReporteAtrasoModelo atraso : atrasos) {
-        modelo.addRow(new Object[]{
-            atraso.getNombre(),
-            atraso.getHoraEntrada(),
-            atraso.getFecha()
-        });
+        DefaultTableModel modelo = (DefaultTableModel) tablaAtrasados.getModel();
     }
-    }
+}
